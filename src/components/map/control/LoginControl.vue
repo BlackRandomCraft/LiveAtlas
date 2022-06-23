@@ -14,30 +14,56 @@
   - limitations under the License.
   -->
 
+<template>
+	<button class="ui__element ui__button" type="button" :title="buttonTitle" :aria-expanded="modalVisible"
+	        @click.prevent.stop="handleClick"
+			@keydown.right.prevent.stop="handleClick">
+		<SvgIcon :name="loggedIn ? 'logout' : 'login'"></SvgIcon>
+	</button>
+</template>
+
 <script lang="ts">
-import {defineComponent, onMounted, onUnmounted} from "@vue/runtime-core";
-import LiveAtlasLeafletMap from "@/leaflet/LiveAtlasLeafletMap";
-import {LoginControl} from "@/leaflet/control/LoginControl";
+import {computed, defineComponent} from "@vue/runtime-core";
+import SvgIcon from "@/components/SvgIcon.vue";
+import {useStore} from "@/store";
+import {ActionTypes} from "@/store/action-types";
+import {notify} from "@kyvg/vue3-notification";
+
+import "@/assets/icons/login.svg";
+import "@/assets/icons/logout.svg";
 
 export default defineComponent({
-	props: {
-		leaflet: {
-			type: Object as () => LiveAtlasLeafletMap,
-			required: true,
+	components: {SvgIcon},
+
+	setup() {
+		const store = useStore(),
+			loggedIn = computed(() => store.state.loggedIn),
+			buttonTitle = computed(() => loggedIn.value ? store.state.messages.logoutTitle : store.state.messages.loginTitle),
+			modalVisible = computed(() => store.state.ui.visibleModal === 'login');
+
+		const handleClick = async () => {
+			const logoutSuccess = computed(() => store.state.messages.logoutSuccess),
+				logoutError = computed(() => store.state.messages.logoutErrorUnknown);
+
+			if (loggedIn.value) {
+				try {
+					await store.dispatch(ActionTypes.LOGOUT, undefined);
+					notify(logoutSuccess.value);
+				} catch(e) {
+					notify(logoutError.value);
+				}
+			} else {
+				await store.dispatch(ActionTypes.LOGIN, null)
+			}
+		};
+
+		return {
+			modalVisible,
+			loggedIn,
+			buttonTitle,
+
+			handleClick
 		}
 	},
-
-	setup(props) {
-		const control = new LoginControl({
-			position: 'topleft',
-		});
-
-		onMounted(() => props.leaflet.addControl(control));
-		onUnmounted(() => props.leaflet.removeControl(control));
-	},
-
-	render() {
-		return null;
-	}
 })
 </script>
