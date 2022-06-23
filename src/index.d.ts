@@ -18,6 +18,7 @@ import {State} from "@/store";
 import {DynmapUrlConfig} from "@/dynmap";
 import LiveAtlasMapDefinition from "@/model/LiveAtlasMapDefinition";
 import {
+	ControlOptions,
 	Coords,
 	DoneCallback, FitBoundsOptions,
 	InternalTiles, LatLng,
@@ -26,7 +27,6 @@ import {
 	PolylineOptions
 } from "leaflet";
 import {CoordinatesControlOptions} from "@/leaflet/control/CoordinatesControl";
-import {ClockControlOptions} from "@/leaflet/control/ClockControl";
 import {LogoControlOptions} from "@/leaflet/control/LogoControl";
 import {globalMessages, serverMessages} from "../messages";
 import {LiveAtlasMarkerType} from "@/util/markers";
@@ -289,6 +289,12 @@ interface LiveAtlasComponentConfig {
 	chatSending?: LiveAtlasChatSendingConfig;
 	chatBalloons: boolean;
 	login: boolean;
+}
+
+export interface ClockControlOptions extends ControlOptions {
+	showTimeOfDay: boolean;
+	showDigitalClock: boolean;
+	showWeather: boolean;
 }
 
 interface LiveAtlasPartialComponentConfig {
