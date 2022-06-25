@@ -31,6 +31,7 @@ import LiveAtlasLeafletMap from "@/leaflet/LiveAtlasLeafletMap";
 import {onMounted, ref} from "vue";
 import {Coordinate, CoordinatesControlOptions} from "@/index";
 import {LeafletMouseEvent} from "leaflet";
+import {CoordinatesControlOptions} from "@/leaflet/control/CoordinatesControl";
 
 export default defineComponent({
 	props: {
@@ -42,7 +43,7 @@ export default defineComponent({
 
 	setup(props) {
 		const store = useStore(),
-			componentSettings = computed(() => store.state.components.coordinatesControl),
+			componentSettings = computed(() => store.state.components.coordinatesControl as CoordinatesControlOptions),
 			currentMap = computed(() => store.state.currentMap),
 
 			chunkLabel = computed(() => store.state.messages.locationChunk),

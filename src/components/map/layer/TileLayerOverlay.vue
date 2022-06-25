@@ -19,6 +19,8 @@ import {defineComponent, onUnmounted} from "@vue/runtime-core";
 import {useStore} from "@/store";
 import LiveAtlasLeafletMap from "@/leaflet/LiveAtlasLeafletMap";
 import {LiveAtlasTileLayerOverlay} from "@/index";
+import {MutationTypes} from "@/store/mutation-types";
+import {markRaw} from "vue";
 
 export default defineComponent({
 	props: {
@@ -37,10 +39,17 @@ export default defineComponent({
 
 		let layer = store.state.currentMapProvider!.createTileLayer(Object.freeze(JSON.parse(JSON.stringify(props.options.tileLayerOptions))));
 
-		props.leaflet.getLayerManager().addHiddenLayer(layer, props.options.label, props.options.priority);
+		store.commit(MutationTypes.ADD_LAYER, {
+			layer: markRaw(layer),
+			name: props.options.label,
+			overlay: true,
+			position: props.options.priority || 0,
+			enabled: false,
+			showInControl: true
+		});
 
 		onUnmounted(() => {
-			props.leaflet.getLayerManager().removeLayer(layer);
+			store.commit(MutationTypes.REMOVE_LAYER, layer)
 			layer.remove();
 		});
 	},
