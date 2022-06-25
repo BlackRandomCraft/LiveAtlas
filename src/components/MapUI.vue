@@ -21,7 +21,9 @@
 		</div>
 
 		<div id="ui__top-left" class="ui__section section--vertical">
-			<div class="ui__toolbar toolbar--vertical"></div>
+			<div class="ui__toolbar toolbar--vertical">
+				<LoadingControl :leaflet="leaflet" :delay="500"></LoadingControl>
+			</div>
 		</div>
 
 		<div id="ui__bottom-left" class="ui__section">
@@ -52,11 +54,10 @@ import ClockControl from "@/components/map/control/ClockControl.vue";
 import LinkControl from "@/components/map/control/LinkControl.vue";
 import ChatControl from "@/components/map/control/ChatControl.vue";
 import LogoControl from "@/components/map/control/LogoControl.vue";
-import {LoadingControl} from "@/leaflet/control/LoadingControl";
 import MapContextMenu from "@/components/map/MapContextMenu.vue";
 import LoginControl from "@/components/map/control/LoginControl.vue";
-import {onMounted} from "vue";
 import LiveAtlasLeafletMap from "@/leaflet/LiveAtlasLeafletMap";
+import LoadingControl from "@/components/map/control/LoadingControl.vue";
 
 export default defineComponent({
 	props: {
@@ -67,6 +68,7 @@ export default defineComponent({
 	},
 
 	components: {
+		LoadingControl,
 		LogoControl,
 		CoordinatesControl,
 		LinkControl,
@@ -86,13 +88,6 @@ export default defineComponent({
 			loginEnabled = computed(() => store.state.components.login),
 
 			logoControls = computed(() => store.state.components.logoControls);
-
-		onMounted(() => {
-			props.leaflet.addControl(new LoadingControl({
-				position: 'topleft',
-				delayIndicator: 500,
-			}))
-		});
 
 		return {
 			contextMenuEnabled,
