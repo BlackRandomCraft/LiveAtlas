@@ -46,7 +46,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["cpy-cli", "npm:4.2.0"],\
             ["eslint", "npm:8.23.1"],\
             ["eslint-plugin-vue", "virtual:6ef8ef7ca60c7401da286b58a80b5534fb43f151218d408f0670cd5c460fd9b3d979dd0bd893bd4a34bedd44bc2c3e08bddd1c15169ad152f800a088b793e74b#npm:9.4.0"],\
-            ["leaflet", "https://github.com/JLyne/Leaflet.git#commit=843eb3124492dc48245cd187c6dc94c2f33b65c1"],\
+            ["leaflet", "https://x-access-token:ghs_isMvK5YogEb2Sc6SoND006bMcP8IaS30bDML@github.com/JLyne/Leaflet.git#commit=0bf4e3f70c2559771592c077401027a6c4913376"],\
             ["lodash.debounce", "npm:4.0.8"],\
             ["modern-normalize", "patch:modern-normalize@npm%3A1.1.0#patches/modern-normalize+1.1.0.patch::version=1.1.0&hash=139f38&locator=live-atlas%40workspace%3A."],\
             ["rimraf", "npm:3.0.2"],\
@@ -3339,10 +3339,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["leaflet", [\
-        ["https://github.com/JLyne/Leaflet.git#commit=843eb3124492dc48245cd187c6dc94c2f33b65c1", {\
-          "packageLocation": "./.yarn/cache/leaflet-https-ea931ed21d-7c9a6f3677.zip/node_modules/leaflet/",\
+        ["https://x-access-token:ghs_isMvK5YogEb2Sc6SoND006bMcP8IaS30bDML@github.com/JLyne/Leaflet.git#commit=0bf4e3f70c2559771592c077401027a6c4913376", {\
+          "packageLocation": "./.yarn/cache/leaflet-https-7f4fdb107c-7d4ce2527e.zip/node_modules/leaflet/",\
           "packageDependencies": [\
-            ["leaflet", "https://github.com/JLyne/Leaflet.git#commit=843eb3124492dc48245cd187c6dc94c2f33b65c1"]\
+            ["leaflet", "https://x-access-token:ghs_isMvK5YogEb2Sc6SoND006bMcP8IaS30bDML@github.com/JLyne/Leaflet.git#commit=0bf4e3f70c2559771592c077401027a6c4913376"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -3390,7 +3390,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["cpy-cli", "npm:4.2.0"],\
             ["eslint", "npm:8.23.1"],\
             ["eslint-plugin-vue", "virtual:6ef8ef7ca60c7401da286b58a80b5534fb43f151218d408f0670cd5c460fd9b3d979dd0bd893bd4a34bedd44bc2c3e08bddd1c15169ad152f800a088b793e74b#npm:9.4.0"],\
-            ["leaflet", "https://github.com/JLyne/Leaflet.git#commit=843eb3124492dc48245cd187c6dc94c2f33b65c1"],\
+            ["leaflet", "https://x-access-token:ghs_isMvK5YogEb2Sc6SoND006bMcP8IaS30bDML@github.com/JLyne/Leaflet.git#commit=0bf4e3f70c2559771592c077401027a6c4913376"],\
             ["lodash.debounce", "npm:4.0.8"],\
             ["modern-normalize", "patch:modern-normalize@npm%3A1.1.0#patches/modern-normalize+1.1.0.patch::version=1.1.0&hash=139f38&locator=live-atlas%40workspace%3A."],\
             ["rimraf", "npm:3.0.2"],\
