@@ -1,52 +1,52 @@
 # LiveAtlas [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE) [![Discord](https://img.shields.io/discord/390942438061113344?color=8C9CFE&label=discord&logo=discord&logoColor=white)](https://discord.gg/DBduB9qyv3) [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/JLyne/LiveAtlas/Build)](https://github.com/JLyne/LiveAtlas/actions)
 
 
-A map frontend built with [Vue.js](https://github.com/vuejs/vue) and Typescript. Supports [Dynmap](https://github.com/webbukkit/dynmap), [Squaremap](https://github.com/jpenilla/squaremap), [Pl3xmap](https://github.com/NeumimTo/Pl3xMap) and [Overviewer](https://github.com/overviewer/Minecraft-Overviewer).
+Картографический фронтенд, созданный с помощью [Vue.js](https://github.com/vuejs/vue) и Typescript. Поддерживает [Dynmap](https://github.com/webbukkit/dynmap), [Squaremap](https://github.com/jpenilla/squaremap), [Pl3xmap](https://github.com/NeumimTo/Pl3xMap) и [Overviewer](https://github.com/overviewer/Minecraft-Overviewer).
 
-![A LiveAtlas screenshot](https://minecraft.rtgame.co.uk/liveatlas/liveatlas8.png)
+![Оригинальный снимок экрана LiveAtlas](https://minecraft.rtgame.co.uk/liveatlas/liveatlas8.png)
 
-LiveAtlas is an alternative frontend which aims to provide a more modern interface and improved performance for busy maps. LiveAtlas is a drop-in replacement for Dynmap; Squaremap, Pl3xmap and Overviewer maps are supported with some additional configuration.
+LiveAtlas - это альтернативный фронтенд, целью которого является обеспечение более современного интерфейса и повышение производительности для загруженных карт. LiveAtlas является полноценной заменой Dynmap; карты Squaremap, Pl3xmap и Overviewer поддерживаются с некоторыми дополнительными настройками.
 
-Development is ongoing, but the major features of each map plugin are supported.
+Разработка продолжается, но основные функции каждого плагина карт поддерживаются. (разработка в главном репозитории, НЕ В МОЕМ)
 
-You can see it in action [here](https://minecraft.rtgame.co.uk/map/build)
+Вы можете увидеть его в действии [здесь](https://minecraft.rtgame.co.uk/map/build) (без перевода, на английском языке)
 
-## Supported map features
-[See the wiki](https://github.com/JLyne/LiveAtlas/wiki/Supported-Maps-and-Features)
+## Поддерживаемые функции карты
+[См. ориг. вики](https://github.com/JLyne/LiveAtlas/wiki/Supported-Maps-and-Features)
 
-## Supported Browsers
+## Поддерживаемые браузеры
 - Chrome 66+
 - Edge 80+
 - Firefox 60+
 - Opera 53+
 - Safari 11.1+
 
-IE is not supported
+Internet Explorer не поддерживается
 
-## Download
-LiveAtlas is available on [SpigotMC](https://www.spigotmc.org/resources/liveatlas-a-dynmap-frontend-for-the-modern-web.86939/), [Polymart](https://polymart.org/resource/liveatlas-alternative-map-ui.1977) and [MCMarket](https://www.mc-market.org/resources/22740/)
+## Скачать
+LiveAtlas доступен на сайтах [SpigotMC](https://www.spigotmc.org/resources/liveatlas-a-dynmap-frontend-for-the-modern-web.86939/), [Polymart](https://polymart.org/resource/liveatlas-alternative-map-ui.1977) и [MCMarket](https://www.mc-market.org/resources/22740/).
 
-Dev builds are available in [Github actions](https://github.com/JLyne/LiveAtlas/actions/workflows/main.yml)
+Сборки доступны на [Github actions](https://github.com/JLyne/LiveAtlas/actions/workflows/main.yml)
 
-## Installation
-[See the wiki](https://github.com/JLyne/LiveAtlas/wiki/Installation)
+## Установка
+[См. вики](https://github.com/JLyne/LiveAtlas/wiki/Installation)
 
-## Customisation
-The index.html file can be edited to add custom favicons, styles or analytics, just like the map plugins original UIs. All LiveAtlas messages can also be modified here for translation purposes.
-You are also free to build LiveAtlas yourself to make further changes.
+## Настройка
+Файл index.html может быть отредактирован для добавления пользовательских фавиконов, стилей или аналитики, как и оригинальные пользовательские интерфейсы плагинов карт. Все сообщения LiveAtlas также могут быть изменены здесь для целей перевода.
+Вы также можете самостоятельно собрать LiveAtlas для внесения дальнейших изменений.
 
-## Building
-This repository uses [yarn zero-installs](https://yarnpkg.com/features/zero-installs), so all dependencies are provided without installing. You can run `yarn run serve` to start a local dev server, or `yarn run build` to build LiveAtlas.
+## Сборка
+Этот репозиторий использует [yarn zero-installs](https://yarnpkg.com/features/zero-installs), поэтому все зависимости предоставляются без установки. Вы можете запустить `yarn run serve` для запуска локального dev-сервера, или `yarn run build` для сборки LiveAtlas.
 
-## Support
-If you find a bug, please create an issue with as must detail as possible. I'm working on this in my spare time, so fixes are on a best effort basis, but I'll eventually find time for them.
+## Поддержка
+Если вы обнаружили ошибку, пожалуйста, создайте проблему с максимально возможным количеством деталей. Я работаю над этим в свободное время, так что исправления будут по мере сил, но в конце концов я найду для них время.
 
-Please do not contact the Dynmap, Squaremap, Pl3xmap or Overviewer teams regarding any issue with LiveAtlas. They will be very upset.
+Пожалуйста, не обращайтесь к командам Dynmap, Squaremap, Pl3xmap или Overviewer по поводу каких-либо проблем с LiveAtlas. Они будут очень расстроены.
 
-## Donate
-If you appreciate my work, feel free to:
+## Пожертвовать
+Если вы цените мою работу, не стесняйтесь, задонатье оригинальным авторам:
 
 <a href='https://ko-fi.com/jlyne' target='_blank'><img height='35' style='border:0px;height:46px;' src='https://az743702.vo.msecnd.net/cdn/kofi3.png?v=0' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
 ___
   
-Cross-browser testing provided by [Browserstack](http://browserstack.com/).
+Кроссбраузерное тестирование обеспечивается [Browserstack](http://browserstack.com/).
