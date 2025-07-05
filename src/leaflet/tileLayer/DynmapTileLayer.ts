@@ -17,15 +17,13 @@
  * limitations under the License.
  */
 
+import {computed, watch, WatchStopHandle, ComputedRef} from "vue";
 import {Map as LeafletMap, Coords, DoneCallback} from 'leaflet';
-import {Store, useStore} from "@/store";
-import {Coordinate, Coordinate2D} from "@/index";
-import {LiveAtlasTileLayer, LiveAtlasTileLayerOptions} from "@/leaflet/tileLayer/LiveAtlasTileLayer";
-import {computed, watch} from "@vue/runtime-core";
-import {ComputedRef} from "@vue/reactivity";
-import {WatchStopHandle} from "vue";
-import {ActionTypes} from "@/store/action-types";
 import {TileInformation} from "dynmap";
+import {Coordinate, Coordinate2D} from "@/index";
+import {Store, useStore} from "@/store";
+import {ActionTypes} from "@/store/action-types";
+import {LiveAtlasTileLayer, LiveAtlasTileLayerOptions} from "@/leaflet/tileLayer/LiveAtlasTileLayer";
 
 
 // noinspection JSUnusedGlobalSymbols
@@ -165,7 +163,7 @@ export class DynmapTileLayer extends LiveAtlasTileLayer {
 			y = scale * coords.y;
 
 		return {
-			prefix: this.options.prefix || '',
+			prefix: encodeURIComponent(this.options.prefix || ''),
 			nightday: (this.options.nightAndDay && !this._night.value) ? '_day' : '',
 			scaledx: x >> 5,
 			scaledy: y >> 5,

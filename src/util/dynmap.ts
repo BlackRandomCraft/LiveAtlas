@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import {DynmapMarkerSetUpdate, DynmapMarkerUpdate, DynmapTileUpdate, DynmapUrlConfig} from "@/dynmap";
+import {PointTuple} from "leaflet";
 import {
 	LiveAtlasAreaMarker,
 	LiveAtlasChat,
@@ -30,6 +30,7 @@ import {
 	LiveAtlasServerMessageConfig,
 	LiveAtlasWorldDefinition
 } from "@/index";
+import {DynmapMarkerSetUpdate, DynmapMarkerUpdate, DynmapTileUpdate, DynmapUrlConfig} from "@/dynmap";
 import {getPoints} from "@/util/areas";
 import {
 	decodeHTMLEntities, getBounds, getMiddle, guessWorldDimension,
@@ -49,7 +50,6 @@ import {
 	WorldConfiguration,
 	WorldMapConfiguration
 } from "dynmap";
-import {PointTuple} from "leaflet";
 import {LiveAtlasMarkerType} from "@/util/markers";
 import {DynmapProjection} from "@/leaflet/projection/DynmapProjection";
 import {getImagePixelSize} from "@/util/images";
@@ -70,6 +70,7 @@ export function buildServerConfig(response: Options): LiveAtlasServerConfig {
 		followMap: response.followmap || undefined,
 		followZoom: isNaN(followZoom) ? undefined : followZoom,
 		title: title,
+		singleMapWorlds: false,
 		expandUI: !!response.sidebaropened && response.sidebaropened !== 'false', //Sent as a string for some reason
 	};
 }
@@ -127,7 +128,7 @@ export function buildWorlds(response: Configuration, config: DynmapUrlConfig): A
 				displayName: map.title,
 				icon: (map.icon || undefined) as string | undefined,
 
-				baseUrl: `${config.tiles}${actualWorld.name}/`,
+				baseUrl: `${config.tiles}${encodeURIComponent(actualWorld.name)}/`,
 				imageFormat: map['image-format'] || 'png',
 				tileSize,
 				projection: new DynmapProjection({

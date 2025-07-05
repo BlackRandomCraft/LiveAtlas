@@ -24,25 +24,31 @@ import LiveAtlasMapDefinition from "@/model/LiveAtlasMapDefinition";
 
 export default abstract class MapProvider implements LiveAtlasMapProvider {
 	protected readonly store = useStore();
+	protected name: string;
 	protected config: any;
 
-	protected constructor(config: any) {
+	protected constructor(name: string, config: any) {
+		this.name = name;
 		this.config = config;
 	}
 
 	abstract loadServerConfiguration(): Promise<void>;
 	abstract createTileLayer(options: LiveAtlasTileLayerOptions): LiveAtlasTileLayer;
 
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	async populateWorld(world: LiveAtlasWorldDefinition): Promise<void> {}
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	async populateMap(map: LiveAtlasMapDefinition): Promise<void> {}
 
 	startUpdates(): void {}
 	stopUpdates(): void {}
 
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	sendChatMessage(message: string) {
 		throw new Error('Provider does not support chat');
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	async login(data: any) {
 		throw new Error('Provider does not support logging in');
 	}
@@ -51,6 +57,7 @@ export default abstract class MapProvider implements LiveAtlasMapProvider {
 		throw new Error('Provider does not support logging out');
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	async register(data: any) {
 		throw new Error('Provider does not support registration');
 	}

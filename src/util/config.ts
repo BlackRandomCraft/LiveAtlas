@@ -15,23 +15,23 @@
  */
 
 import {LiveAtlasGlobalConfig, LiveAtlasServerDefinition} from "@/index";
-import ConfigurationError from "@/errors/ConfigurationError";
 import {DynmapUrlConfig} from "@/dynmap";
 import {useStore} from "@/store";
+import ConfigurationError from "@/errors/ConfigurationError";
 import MapProvider from "@/providers/MapProvider";
 import DynmapMapProvider from "@/providers/DynmapMapProvider";
 
 const expectedConfigVersion = 1,
-	registeredProviders: Map<string, new (config: any) => MapProvider> = new Map(),
+	registeredProviders: Map<string, new (name: string, config: any) => MapProvider> = new Map(),
 	serverProviders: Map<string, MapProvider> = new Map();
 
 /**
  * Registers the given {@link MapProvider} with the given id
  * Server entries in {@link LiveAtlasGlobalConfig} with the given id will use the given MapProvider
  * @param {string} id The id
- * @param {new (config: any) => MapProvider} provider The MapProvider
+ * @param {new (name: string, config: any) => MapProvider} provider The MapProvider
  */
-export const registerMapProvider = (id: string, provider: new (config: any) => MapProvider) => {
+export const registerMapProvider = (id: string, provider: new (name: string, config: any) => MapProvider) => {
 	if(registeredProviders.has(id)) {
 		throw new TypeError(`${id} is already registered`);
 	}
@@ -74,7 +74,7 @@ const loadLiveAtlasConfig = (config: any): Map<string, LiveAtlasServerDefinition
 		for (const mapProvider of registeredProviders) {
 			if(serverConfig && Object.hasOwnProperty.call(serverConfig, mapProvider[0])) {
 				try {
-					serverProviders.set(server, new mapProvider[1](serverConfig[mapProvider[0]]));
+					serverProviders.set(server, new mapProvider[1](server, serverConfig[mapProvider[0]]));
 				} catch(e: any) {
 					e.message = `Server "${server}": ${e.message}. ${check}`;
 					throw e;
@@ -111,7 +111,7 @@ const loadDefaultConfig = (config: DynmapUrlConfig): Map<string, LiveAtlasServer
 	});
 
 	try {
-		serverProviders.set('dynmap', new DynmapMapProvider(config));
+		serverProviders.set('dynmap', new DynmapMapProvider('dynmap', config));
 	} catch (e: any) {
 		e.message = `${e.message}. ${check}`;
 		throw e;

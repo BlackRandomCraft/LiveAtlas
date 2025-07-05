@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import {PointTuple} from "leaflet";
 import {
 	LiveAtlasAreaMarker,
 	LiveAtlasCircleMarker,
@@ -28,14 +29,12 @@ import {
 	LiveAtlasServerMessageConfig,
 	LiveAtlasWorldDefinition
 } from "@/index";
-import LiveAtlasMapDefinition from "@/model/LiveAtlasMapDefinition";
 import {MutationTypes} from "@/store/mutation-types";
-import MapProvider from "@/providers/MapProvider";
 import {ActionTypes} from "@/store/action-types";
-import {getBoundsFromPoints, getMiddle, stripHTML, titleColoursRegex} from "@/util";
+import LiveAtlasMapDefinition from "@/model/LiveAtlasMapDefinition";
+import MapProvider from "@/providers/MapProvider";
+import {getBoundsFromPoints, getMiddle, stripHTML, titleColoursRegex, validateConfigURL} from "@/util";
 import {LiveAtlasMarkerType} from "@/util/markers";
-import {PointTuple} from "leaflet";
-import ConfigurationError from "@/errors/ConfigurationError";
 import {Pl3xmapTileLayer} from "@/leaflet/tileLayer/Pl3xmapTileLayer";
 import {LiveAtlasTileLayer, LiveAtlasTileLayerOptions} from "@/leaflet/tileLayer/LiveAtlasTileLayer";
 import {getDefaultPlayerImage} from "@/util/images";
@@ -63,12 +62,14 @@ export default class Pl3xmapMapProvider extends MapProvider {
 	private markerSets: Map<string, LiveAtlasMarkerSet> = new Map();
 	private markers = new Map<string, Map<string, LiveAtlasMarker>>();
 
-	constructor(config: string) {
-		super(config);
+	constructor(name: string, config: string) {
+		super(name, config);
 
-		if(!this.config) {
-			throw new ConfigurationError("URL missing");
+		if(this.config === true) {
+			this.config = window.location.pathname;
 		}
+
+		validateConfigURL(config, name, 'map');
 
 		if(this.config.slice(-1) !== '/') {
 			this.config = `${config}/`;
@@ -79,6 +80,7 @@ export default class Pl3xmapMapProvider extends MapProvider {
 		return {
 			title: (response.ui?.title || 'Pl3xmap').replace(titleColoursRegex, ''),
 			expandUI: response.ui?.sidebar?.pinned === 'pinned',
+			singleMapWorlds: true,
 
 			//Not used by pl3xmap
 			defaultZoom: 1,
@@ -141,7 +143,7 @@ export default class Pl3xmapMapProvider extends MapProvider {
 				if(worldResponse.player_tracker?.nameplates?.heads_url) {
 					worldConfig.components.players!.imageUrl = entry =>
 						worldResponse.player_tracker.nameplates.heads_url
-							.replace('{uuid}', entry.uuid).replace('{name}', entry.name);
+							.replace('{uuid}', entry.uuid).replace('{name}', encodeURIComponent(entry.name));
 				}
 
 				worldConfig.components.players!.markers = {
@@ -254,7 +256,7 @@ export default class Pl3xmapMapProvider extends MapProvider {
 	}
 
 	private async getMarkerSets(world: LiveAtlasWorldDefinition): Promise<void> {
-		const url = `${this.config}tiles/${world.name}/markers.json`;
+		const url = `${this.config}tiles/${encodeURIComponent(world.name)}/markers.json`;
 
 		if(this.markersAbort) {
 			this.markersAbort.abort();
@@ -439,7 +441,7 @@ export default class Pl3xmapMapProvider extends MapProvider {
 
 	private static addY(points: any) {
 		for (const point of points) {
-			points.y = 0;
+			point.y = 0;
 		}
 
 		return points;

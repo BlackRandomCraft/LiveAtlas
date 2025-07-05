@@ -15,27 +15,40 @@
   -->
 
 <template>
-	<div v-if="maps.length" class="world">
-		<span class="world__name" aria-hidden="true">{{ world.displayName }}</span>
-		<div class="world__maps menu">
-			<template v-for="map in maps" :key="`${map.world.name}_${map.name}`">
-				<input :id="`${name}-${map.world.name}-${map.name}`" type="radio" :name="name"
-				       v-bind:value="[map.world.name,map.name]" v-model="currentMap"
-				       :aria-labelledby="`${name}-${map.world.name}-${map.name}-label`">
-				<label :id="`${name}-${map.world.name}-${map.name}-label`" class="map"
-				       :for="`${name}-${map.world.name}-${map.name}`"
-				       :title="`${map.world.displayName} - ${map.displayName}`">
-					<img v-if="map.hasCustomIcon()" :src="map.getIcon()" alt="" />
-					<SvgIcon v-else :name="map.getIcon()"></SvgIcon>
-				</label>
-			</template>
-		</div>
-	</div>
+    <template v-if="singleMapWorlds">
+      <input :id="`${name}-${maps[0].world.name}-${maps[0].name}`" type="radio" :name="name"
+                 v-bind:value="[maps[0].world.name, maps[0].name]" v-model="currentMap"
+                 :aria-labelledby="`${name}-${maps[0].world.name}-${maps[0].name}-label`">
+      <label :id="`${name}-${maps[0].world.name}-${maps[0].name}-label`"
+             :for="`${name}-${maps[0].world.name}-${maps[0].name}`">
+        {{ maps[0].world.displayName }}
+      </label>
+    </template>
+    <template v-else>
+      <div v-if="maps.length" class="world">
+        <span class="world__name" aria-hidden="true">{{ world.displayName }}</span>
+        <div class="world__maps menu">
+          <template v-for="map in maps" :key="`${map.world.name}_${map.name}`">
+            <input :id="`${name}-${map.world.name}-${map.name}`" type="radio" :name="name"
+                   v-bind:value="[map.world.name,map.name]" v-model="currentMap"
+                   :aria-labelledby="`${name}-${map.world.name}-${map.name}-label`">
+            <label :id="`${name}-${map.world.name}-${map.name}-label`" class="map"
+                   :for="`${name}-${map.world.name}-${map.name}`"
+                   :title="`${map.world.displayName} - ${map.displayName}`">
+              <img v-if="map.hasCustomIcon()" :src="map.getIcon()" alt="" />
+              <SvgIcon v-else :name="map.getIcon()"></SvgIcon>
+            </label>
+          </template>
+        </div>
+	    </div>
+    </template>
 </template>
 
 <script lang="ts">
-import {useStore} from "@/store";
 import {computed, defineComponent} from 'vue';
+import {LiveAtlasWorldDefinition} from "@/index";
+import LiveAtlasMapDefinition from "@/model/LiveAtlasMapDefinition";
+import {useStore} from "@/store";
 import {MutationTypes} from "@/store/mutation-types";
 import SvgIcon from "@/components/SvgIcon.vue";
 import "@/assets/icons/block_world_surface.svg";
@@ -49,8 +62,6 @@ import "@/assets/icons/block_the_end_surface.svg";
 import "@/assets/icons/block_other.svg";
 import "@/assets/icons/block_other_flat.svg";
 import "@/assets/icons/block_skylands.svg";
-import {LiveAtlasWorldDefinition} from "@/index";
-import LiveAtlasMapDefinition from "@/model/LiveAtlasMapDefinition";
 
 export default defineComponent({
 	name: 'WorldListItem',
@@ -68,6 +79,7 @@ export default defineComponent({
 
 	setup(props) {
 		const store = useStore(),
+      singleMapWorlds = computed(() => store.state.configuration.singleMapWorlds),
 			maps = computed(() => {
 				const maps: LiveAtlasMapDefinition[] = [];
 
@@ -90,6 +102,7 @@ export default defineComponent({
 
 		return {
 			currentMap,
+      singleMapWorlds,
 			maps
 		}
 	}

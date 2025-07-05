@@ -19,12 +19,12 @@
 		<PlayerImage v-if="showFace && message.playerAccount" :player="message.playerAccount" width="16" height="16" class="message__face" />
 		<span v-if="messageChannel" class="message__channel" v-html="messageChannel"></span>
 		<span v-if="showSender" class="message__sender" v-html="message.playerName"></span>
-		<span class="message__content" v-html="messageContent"></span>
+		<span class="message__content">{{ messageContent }}</span>
 	</li>
 </template>
 
 <script lang="ts">
-	import {defineComponent, computed} from "@vue/runtime-core";
+	import {defineComponent, computed} from "vue";
 	import {useStore} from "@/store";
 	import {LiveAtlasChat} from "@/index";
 	import PlayerImage from "@/components/PlayerImage.vue";

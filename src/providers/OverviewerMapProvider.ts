@@ -26,6 +26,7 @@ import {
 	LiveAtlasServerMessageConfig, LiveAtlasTileLayerOverlay,
 	LiveAtlasWorldDefinition
 } from "@/index";
+import {useStore} from "@/store";
 import {MutationTypes} from "@/store/mutation-types";
 import MapProvider from "@/providers/MapProvider";
 import {
@@ -33,15 +34,13 @@ import {
 	getMiddle,
 	guessWorldDimension,
 	runSandboxed,
-	stripHTML,
+	stripHTML, validateConfigURL,
 } from "@/util";
-import ConfigurationError from "@/errors/ConfigurationError";
 import {LiveAtlasTileLayer, LiveAtlasTileLayerOptions} from "@/leaflet/tileLayer/LiveAtlasTileLayer";
 import {OverviewerTileLayer} from "@/leaflet/tileLayer/OverviewerTileLayer";
 import LiveAtlasMapDefinition from "@/model/LiveAtlasMapDefinition";
 import {OverviewerProjection} from "@/leaflet/projection/OverviewerProjection";
 import {LiveAtlasMarkerType} from "@/util/markers";
-import {useStore} from "@/store";
 import {getDefaultPlayerImage} from "@/util/images";
 
 export default class OverviewerMapProvider extends MapProvider {
@@ -51,21 +50,21 @@ export default class OverviewerMapProvider extends MapProvider {
 	private readonly mapMarkerSets: Map<string, Map<string, LiveAtlasMarkerSet>> = new Map();
 	private readonly mapMarkers: Map<string, Map<string, Map<string, LiveAtlasMarker>>> = Object.freeze(new Map());
 
-	constructor(config: string) {
-		super(config);
+	constructor(name: string, config: string) {
+		super(name, config);
 
-		if(!this.config) {
-			throw new ConfigurationError("URL missing");
-		}
+		validateConfigURL(config, name, 'map');
 
 		if(this.config.slice(-1) !== '/') {
 			this.config = `${config}/`;
 		}
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	private static buildServerConfig(ignore: any): LiveAtlasServerConfig {
 		return {
 			title: useStore().state.initialTitle,
+			singleMapWorlds: false,
 
 			//Not used by overviewer
 			expandUI: false,
@@ -77,6 +76,7 @@ export default class OverviewerMapProvider extends MapProvider {
 		};
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	private static buildMessagesConfig(ignore: any): LiveAtlasServerMessageConfig {
 		return {
 			worldsHeading: 'Worlds',

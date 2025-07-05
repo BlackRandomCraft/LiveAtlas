@@ -15,10 +15,6 @@
  */
 
 import {
-	DynmapMarkerUpdate,
-	DynmapTileUpdate
-} from "@/dynmap";
-import {
 	Coordinate,
 	LiveAtlasWorldState,
 	LiveAtlasServerDefinition,
@@ -38,6 +34,10 @@ import {
 	LiveAtlasSidebarSectionState,
 	LiveAtlasMarker, LiveAtlasMapViewTarget
 } from "@/index";
+import {
+	DynmapMarkerUpdate,
+	DynmapTileUpdate
+} from "@/dynmap";
 import LiveAtlasMapDefinition from "@/model/LiveAtlasMapDefinition";
 import {getMessages} from "@/util";
 import {getDefaultPlayerImage} from "@/util/images";
@@ -120,6 +120,7 @@ export const state: State = {
 		followZoom: 0,
 		title: '',
 		expandUI: false,
+		singleMapWorlds: false,
 	},
 	configurationHash: undefined,
 

@@ -2,8 +2,6 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <link rel="preload" href="https://fonts.gstatic.com/s/raleway/v22/1Ptxg8zYS_SKggPN4iEgvnHyvveLxVvaorCIPrE.woff2" as="font" crossorigin="anonymous">
-    <link rel="preload" href="https://fonts.gstatic.com/s/raleway/v22/1Ptxg8zYS_SKggPN4iEgvnHyvveLxVsEpbCIPrE.woff2" as="font" crossorigin="anonymous">
 
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
 
@@ -323,6 +321,15 @@
             justify-content: center;
             font-size: 1.6rem;
             padding: 4rem;
+        }
+
+        #splash:after {
+            color: var(--text-subtle);
+            content: '3.0.0-beta.2';
+            font-family: monospace;
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
         }
 
         #splash[hidden] {

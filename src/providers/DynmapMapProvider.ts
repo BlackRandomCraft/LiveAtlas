@@ -17,16 +17,18 @@
  * limitations under the License.
  */
 
+import {MarkerSet} from "dynmap";
 import {
 	LiveAtlasMarker,
 	LiveAtlasMarkerSet,
 	LiveAtlasPlayer,
 	LiveAtlasWorldDefinition
 } from "@/index";
-import ChatError from "@/errors/ChatError";
+import {DynmapUrlConfig} from "@/dynmap";
 import {MutationTypes} from "@/store/mutation-types";
-import MapProvider from "@/providers/MapProvider";
 import {ActionTypes} from "@/store/action-types";
+import ChatError from "@/errors/ChatError";
+import MapProvider from "@/providers/MapProvider";
 import {
 	buildAreas,
 	buildCircles, buildComponents,
@@ -36,11 +38,10 @@ import {
 	buildMessagesConfig,
 	buildServerConfig, buildUpdates, buildWorlds
 } from "@/util/dynmap";
-import {MarkerSet} from "dynmap";
-import {DynmapUrlConfig} from "@/dynmap";
 import ConfigurationError from "@/errors/ConfigurationError";
 import {DynmapTileLayer} from "@/leaflet/tileLayer/DynmapTileLayer";
 import {LiveAtlasTileLayer, LiveAtlasTileLayerOptions} from "@/leaflet/tileLayer/LiveAtlasTileLayer";
+import {validateConfigURL} from "@/util";
 
 export default class DynmapMapProvider extends MapProvider {
 	private configurationAbort?: AbortController = undefined;
@@ -55,8 +56,8 @@ export default class DynmapMapProvider extends MapProvider {
 	private markerSets: Map<string, LiveAtlasMarkerSet> = new Map();
 	private markers = new Map<string, Map<string, LiveAtlasMarker>>();
 
-	constructor(config: DynmapUrlConfig) {
-		super(config);
+	constructor(name: string, config: DynmapUrlConfig) {
+		super(name, config);
 		this.validateConfig();
 	}
 
@@ -66,30 +67,16 @@ export default class DynmapMapProvider extends MapProvider {
 				throw new ConfigurationError(`Dynmap configuration object missing`);
 			}
 
-			if (!this.config.configuration) {
-				throw new ConfigurationError(`Dynmap configuration URL missing`);
-			}
-
-			if (!this.config.update) {
-				throw new ConfigurationError(`Dynmap update URL missing`);
-			}
-
-			if (!this.config.markers) {
-				throw new ConfigurationError(`Dynmap markers URL missing`);
-			}
-
-			if (!this.config.tiles) {
-				throw new ConfigurationError(`Dynmap tiles URL missing`);
-			}
-
-			if (!this.config.sendmessage) {
-				throw new ConfigurationError(`Dynmap sendmessage URL missing`);
-			}
+			validateConfigURL(this.config.configuration, this.name, 'configuration');
+			validateConfigURL(this.config.update, this.name,'update');
+			validateConfigURL(this.config.markers, this.name,'markers');
+			validateConfigURL(this.config.tiles, this.name,'tiles');
+			validateConfigURL(this.config.sendmessage, this.name,'sendmessage');
 		}
 	}
 
 	private async getMarkerSets(world: LiveAtlasWorldDefinition): Promise<void> {
-		const url = `${this.config.markers}_markers_/marker_${world.name}.json`;
+		const url = `${this.config.markers}_markers_/marker_${encodeURIComponent(world.name)}.json`;
 
 		if(this.markersAbort) {
 			this.markersAbort.abort();
@@ -162,7 +149,7 @@ export default class DynmapMapProvider extends MapProvider {
 
 	private async getUpdate(): Promise<void> {
 		let url = this.config.update;
-		url = url.replace('{world}', this.store.state.currentWorld!.name);
+		url = url.replace('{world}', encodeURIComponent(this.store.state.currentWorld!.name));
 		url = url.replace('{timestamp}', this.updateTimestamp.getTime().toString());
 
 		if(this.updateAbort) {

@@ -15,12 +15,11 @@
   -->
 
 <script lang="ts">
-import {defineComponent, computed, ref, onMounted, onUnmounted} from "@vue/runtime-core";
-import {LayerGroup} from 'leaflet';
+import {defineComponent, computed, ref, onMounted, onUnmounted} from "vue";
+import {LayerGroup, Popup} from 'leaflet';
+import {LiveAtlasChat, LiveAtlasPlayer} from "@/index";
 import {useStore} from "@/store";
 import {PlayerMarker} from "@/leaflet/marker/PlayerMarker";
-import {Popup} from "leaflet";
-import {LiveAtlasChat, LiveAtlasPlayer} from "@/index";
 
 export default defineComponent({
 	props: {
@@ -112,7 +111,9 @@ export default defineComponent({
 
 			updateChatBalloon = () => {
 				const content = playerChat.value.reduceRight<string>((previousValue, currentValue) => {
-					return previousValue + `<span>${currentValue.message}</span>`;
+          const span = document.createElement('span');
+          span.appendChild(document.createTextNode(currentValue.message || ''));
+					return previousValue + span.outerHTML;
 				}, '');
 
 				//Update balloon if content has changed

@@ -14,9 +14,6 @@
  * limitations under the License.
  */
 
-import {State} from "@/store";
-import {DynmapUrlConfig} from "@/dynmap";
-import LiveAtlasMapDefinition from "@/model/LiveAtlasMapDefinition";
 import {
 	Coords,
 	DoneCallback, FitBoundsOptions,
@@ -25,6 +22,8 @@ import {
 	PointTuple,
 	PolylineOptions
 } from "leaflet";
+import {DynmapUrlConfig} from "@/dynmap";
+import LiveAtlasMapDefinition from "@/model/LiveAtlasMapDefinition";
 import {CoordinatesControlOptions} from "@/leaflet/control/CoordinatesControl";
 import {ClockControlOptions} from "@/leaflet/control/ClockControl";
 import {LogoControlOptions} from "@/leaflet/control/LogoControl";
@@ -268,6 +267,7 @@ interface LiveAtlasServerConfig {
 	followZoom?: number;
 	title: string;
 	expandUI: boolean;
+	singleMapWorlds: boolean;
 }
 
 interface LiveAtlasComponentConfig {
